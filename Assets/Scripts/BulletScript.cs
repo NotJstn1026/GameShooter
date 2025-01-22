@@ -15,9 +15,17 @@ public class BulletScript : MonoBehaviour
     {
         rb.AddForce(Vector3.forward * shootforce ,ForceMode.Impulse);
     }
+    //private void Update()
+    //{
+        
+    //}
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
+        if (collision.transform.tag == "Collidable")
         {
             Destroy(gameObject);
         }
