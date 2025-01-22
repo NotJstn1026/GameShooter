@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,13 @@ public class PlayerController : MonoBehaviour
     [Header("Mouse Settings")]
     public float mouseSensitivity = 100f;
 
+    [Header("Ground Check Settings")]
+    public Transform groundCheckTransform; // Empty GameObject to define ground check position
+    public float groundCheckRadius = 0.4f;
+    public LayerMask groundLayer;
+
     private CharacterController controller;
+    private GroundCheck groundCheck;
     private Vector3 velocity;
     private Transform cameraTransform;
     private float xRotation = 0f;
@@ -22,31 +29,45 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
 
+        // Initialize the GroundCheck class
+        groundCheck = new GroundCheck(groundCheckTransform, groundCheckRadius, groundLayer);
+
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        // Handle mouse input
+        HandleMouseLook();
+        HandleMovement();
+    }
+
+    void HandleMouseLook()
+    {
+        // Mouse input
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
+        // Rotate the camera vertically (up and down)
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
 
-        // Handle WASD movement
+        // Rotate the player horizontally (left and right)
+        transform.Rotate(Vector3.up * mouseX);
+    }
+
+    void HandleMovement()
+    {
+        // WASD movement
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
         controller.Move(move * moveSpeed * Time.deltaTime);
 
-        // Handle gravity
-        if (controller.isGrounded && velocity.y < 0)
+        // Apply gravity
+        if (groundCheck.IsGrounded() && velocity.y < 0)
         {
             velocity.y = -2f;
         }
@@ -55,11 +76,15 @@ public class PlayerController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         // Handle jump
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if (Input.GetButtonDown("Jump") && groundCheck.IsGrounded())
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 }
+
+
+
+
 
 
