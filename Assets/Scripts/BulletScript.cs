@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    private Rigidbody rb;
+    private float shootforce = 30f;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb.AddForce(Vector3.forward * shootforce ,ForceMode.Impulse);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.transform.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
     }
 }
