@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
@@ -30,6 +29,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
+        CheckHealth();
         RotateTowardsPlayer();
         MoveForward();
     }

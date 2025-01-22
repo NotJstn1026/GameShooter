@@ -4,7 +4,7 @@ public class EnemySpawnerManager : MonoBehaviour
 {
     private GameObject[] spawnPoints;
 
-    private GameObject enemyPrefab;
+    [SerializeField] private GameObject enemyPrefab;
 
     [SerializeField] private AnimationCurve spawnCurve;
 

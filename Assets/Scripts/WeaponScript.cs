@@ -7,18 +7,18 @@ public class WeaponScript : MonoBehaviour
 {
     [SerializeField] private Transform shootpoint;
     [SerializeField] private GameObject bulletPreFab;
-    private EyeScript eyes;
+    //private EyeScript eyes;
     private float shootcooldown = 0.5f;
     private float cooldownTimer;
 
     private void Awake()
     {
-        eyes = GameObject.FindAnyObjectByType<EyeScript>();
+        //eyes = GameObject.FindAnyObjectByType<EyeScript>();
     }
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(eyes.hit.point);
+        //transform.LookAt(eyes.hit.point);
 
         if (Input.GetKey(KeyCode.Mouse0))
         {

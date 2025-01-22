@@ -151,8 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5bf854ddb2e3734688f36bc3d920a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4172885327348759259, guid: 53afd65d1fadd4343b16885ad19b2b34,
-    type: 3}
   spawnCurve:
     serializedVersion: 2
     m_Curve:
@@ -178,9 +176,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   spawnSpeedIncreaseFactor: 0.01
-  spawnSpeedFactor: 0
   spawnIntervalTimerSet: 2
-  spawnIntervalTimer: 0
 --- !u!4 &717622293
 Transform:
   m_ObjectHideFlags: 0
